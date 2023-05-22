@@ -1,2 +1,3 @@
 # Blog 
- Criado vendo curso e videos de python e Django
+ 
+ Criando um blog atravez de curso e videos para um projeto
