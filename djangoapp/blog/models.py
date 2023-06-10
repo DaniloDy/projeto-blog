@@ -22,7 +22,7 @@ class PostAttachment(AbstractAttachment):
             resize_image(self.file, 900, True, 70)
 
         return super_save
-    
+
 
 class Tag(models.Model):
     class Meta:
@@ -39,10 +39,10 @@ class Tag(models.Model):
         if not self.slug:
             self.slug = slugify_new(self.name, 4)
         return super().save(*args, **kwargs)
-    
+
     def __str__(self) -> str:
         return self.name
-    
+
 
 class Category(models.Model):
     class Meta:
@@ -59,11 +59,11 @@ class Category(models.Model):
         if not self.slug:
             self.slug = slugify_new(self.name, 4)
         return super().save(*args, **kwargs)
-    
-    
+
     def __str__(self) -> str:
         return self.name
-    
+
+
 class Page(models.Model):
     title = models.CharField(max_length=65,)
     slug = models.SlugField(
@@ -88,15 +88,17 @@ class Page(models.Model):
         if not self.slug:
             self.slug = slugify_new(self.title, 4)
         return super().save(*args, **kwargs)
-    
+
     def __str__(self) -> str:
         return self.title
+
 
 class PostManager(models.Manager):
     def get_published(self):
         return self\
             .filter(is_published=True)\
             .order_by('-pk')
+
 
 class Post(models.Model):
     class Meta:
@@ -148,29 +150,24 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def get_absolute_url(self):
         if not self.is_published:
             return reverse('blog:index')
         return reverse('blog:post', args=(self.slug,))
-    
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify_new(self.title, 4)
 
-
         current_cover_name = str(self.cover.name)
         super_save = super().save(*args, **kwargs)
         cover_changed = False
 
-
         if self.cover:
             cover_changed = current_cover_name != self.cover.name
 
-
         if cover_changed:
             resize_image(self.cover, 900, True, 70)
-
 
         return super_save
