@@ -17,24 +17,23 @@
   <div class="single-post-content section-content-narrow">
     <div class="single-post-gap section-gap">
 
-
       {% if post.cover and post.cover_in_post_content %}
-      <div class="single-post-cover pb-base">
-        <img 
-          loading="lazy" 
-          src="{{ post.cover.url }}" 
-          alt="{{ post.title }}"
-        >
-      </div>
-    {% endif %}
+        <div class="single-post-cover pb-base">
+          <img 
+            loading="lazy" 
+            src="{{ post.cover.url }}" 
+            alt="{{ post.title }}"
+          >
+        </div>
+      {% endif %}
 
-    <h2 class="single-post-title pb-base center">
-      {{ post.title }}
-    </h2>
+      <h2 class="single-post-title pb-base center">
+        {{ post.title }}
+      </h2>
 
-    <div class="post-meta pb-base">
-      <div class="post-meta-item">
-        <a 
+      <div class="post-meta pb-base">
+        <div class="post-meta-item">
+          <a 
             class="post-meta-link" 
             href="{% url 'blog:created_by' post.created_by.pk  %}"
           >
@@ -71,34 +70,35 @@
             </a>
           </div>
         {% endif %}
-
+      
       </div>
 
       <p class="single-post-excerpt pb-base">
         {{ post.excerpt | safe }}
       </p>
+
       <div class="separator"></div>
+
       <div class="single-post-content">
-       
-        
-        {{ post.content | safe  }}
+        {{ post.content | safe  }} 
       
         {% if post.tags.exists %}
-        <div class="post-tags">
-          <span>Tags: </span>
+          <div class="post-tags">
+            <span>Tags: </span>
 
-          {% for tag in post.tags.all %}
-            <a class="post-tag-link" href="{% url 'blog:tag' tag.slug %}">
-              <i class="fa-solid fa-link"></i>
-              <span>{{ tag.name }}</span>
-            </a>
-          {% endfor %}
-        </div>
-      {% endif %}
+            {% for tag in post.tags.all %}
+              <a class="post-tag-link" href="{% url 'blog:tag' tag.slug %}">
+                <i class="fa-solid fa-link"></i>
+                <span>{{ tag.name }}</span>
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
         
       </div>
     
     </div>
   </div>
 </main>
+
 {% endblock content %}
